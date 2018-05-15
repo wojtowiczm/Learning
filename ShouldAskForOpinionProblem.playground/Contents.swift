@@ -25,7 +25,6 @@ func shouldAskForOpinion(_ log: [String]) -> Bool {
 
 func toDate(_ string: String) -> Date? {
     let dateFormatter = DateFormatter()
-    dateFormatter
     dateFormatter.dateFormat = "YYY-MM-DD HH:mm:ss"
     return dateFormatter.date(from: string)
 }
