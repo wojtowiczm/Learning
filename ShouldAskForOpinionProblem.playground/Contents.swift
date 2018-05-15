@@ -7,6 +7,22 @@ import Foundation
 
 var firstLog = ["2017-03-10 08:13:11", "2017-03-10 19:01:27", "2017-03-11 07:35:55", "2017-03-11 16:15:11", "2017-03-12 08:01:41", "2017-03-12 17:19:08"] // should return true
 var secondLog = ["2017-03-10 18:58:11", "2017-03-10 19:01:27", "2017-03-11 07:35:55", "2017-03-11 16:15:11", "2017-03-12 08:01:41", "2017-03-12 17:19:08"] // shuld return false
+
+
+func shouldAskForOpinion(_ log: [String]) -> Bool {
+    let newSessionInterval: TimeInterval = 60 * 30 // 30 minutes
+    let minimumUniqueSessions = 6
+    var uniqueSessions = 1
+    var dates = log.compactMap { toDate($0) }
+    
+    for i in 0...dates.count - 2 {
+        if newSessionInterval < intervalBetweenDates(dates[i], dates[i + 1]) {
+            uniqueSessions += 1
+        }
+    }
+    return minimumUniqueSessions <= uniqueSessions
+}
+
 func toDate(_ string: String) -> Date? {
     let dateFormatter = DateFormatter()
     dateFormatter
@@ -14,22 +30,7 @@ func toDate(_ string: String) -> Date? {
     return dateFormatter.date(from: string)
 }
 
-func shouldAskForOpinion(_ log: [String]) -> Bool {
-    let newSessionInterval: TimeInterval = 60 * 30 // 30 minutes
-    var uniqueSessions = 1
-    var dates = log.compactMap { toDate($0) }
-    
-    for i in 0...dates.count - 2 {
-        if newSessionInterval < getIntervalBetweenDates(dates[i],
-                                                        dates[i + 1]) {
-            uniqueSessions += 1
-        }
-    }
-    return uniqueSessions >= 6
-    
-}
-
-func getIntervalBetweenDates(_ dateOne: Date,_ dateTwo: Date) -> TimeInterval {
+func intervalBetweenDates(_ dateOne: Date,_ dateTwo: Date) -> TimeInterval {
     return dateTwo.timeIntervalSince(dateOne)
 }
 print(shouldAskForOpinion(firstLog))
