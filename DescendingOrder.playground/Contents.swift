@@ -19,4 +19,8 @@ func descendingOrder(_ num: Int) -> Int {
     return Int(sorted)!
 }
 
-descendingOrder(123456789)
+descendingOrder(21445) // Output: 54421
+descendingOrder(145263) // Output: 654321
+descendingOrder(123456789 // Output: 987654321
+
+
